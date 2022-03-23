@@ -1,2 +1,9 @@
 # Project exclude paths
 /out/
+*.idea*
+*/__pycache__
+*/*/__pycache__
+.DS_Store
+.spyproject
+*.iml
+**/target
