@@ -5,15 +5,14 @@ import matplotlib.pyplot as plt
 pd.set_option('expand_frame_repr', False)  # 当列太多时不换行
 pd.set_option('display.max_rows', 5000)  # 最多显示数据的行数
 
-
 can_sell = False  # 是否允许卖出
 region = 0.1  # 单位范围X
 step = 0.1  # 单位定投率Y
 
 invest_cash = 108
 
-now_price = 40724.8
-ma_price = 47071.1
+now_price = 44083.6
+ma_price = 47369.35
 
 bias = (now_price - ma_price) / ma_price
 
@@ -49,7 +48,6 @@ smart_invest = invest_cash * invest_rate
 print("smart_invest-----------:%f" % smart_invest)
 print("invest_追加-----------:%f" % (smart_invest - invest_cash))
 
-
 #
 # # 比较均线定投和普通定投的区别
 # df = compare_smart_and_normal_invest(df, week=week, invest_cash=invest_cash, trade_rate=0.15 / 100, can_sell=can_sell)[
@@ -64,3 +62,4 @@ print("invest_追加-----------:%f" % (smart_invest - invest_cash))
 # df.to_csv('聪明aaa.csv', encoding='gbk', index=False)
 #
 # print(df.tail(5))
+exit()

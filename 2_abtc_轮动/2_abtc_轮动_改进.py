@@ -2,19 +2,20 @@ import pandas as pd
 import numpy as np
 from function import *
 import matplotlib.pyplot as plt
+
 pd.set_option('expand_frame_repr', False)  # 当列太多时不换行
 pd.set_option('display.max_rows', 5000)  # 最多显示数据的行数
 
 # 读取数据
 # df_coin1 = pd.read_csv('BTCUSD-1d.csv', encoding='gbk', parse_dates=['candle_end_time'])
 # df_coin2 = pd.read_csv('ETHUSD-1d.csv', encoding='gbk', parse_dates=['candle_end_time'])
-df_coin1 = pd.read_csv('../1_abtc_auto_inveset_plan/BTCUSD-1d-curr.csv', encoding='gbk', parse_dates=['candle_end_time'])
-df_coin2 = pd.read_csv('../1_abtc_auto_inveset_plan/ETHUSD-1d-curr.csv', encoding='gbk', parse_dates=['candle_end_time'])
-
-
+df_coin1 = pd.read_csv('../1_abtc_auto_inveset_plan/BTCUSD-1d-curr.csv', encoding='gbk',
+                       parse_dates=['candle_end_time'])
+df_coin2 = pd.read_csv('../1_abtc_auto_inveset_plan/ETHUSD-1d-curr.csv', encoding='gbk',
+                       parse_dates=['candle_end_time'])
 
 # 设置参数
-trade_rate = 2.5 / 1000  #千分之2.5的交易费用远高于市场平均水平
+trade_rate = 2.5 / 1000  # 千分之2.5的交易费用远高于市场平均水平
 momentum_days = 20  # 计算多少天的涨跌幅
 
 # 计算两种币每天的涨跌幅pct
@@ -25,7 +26,8 @@ df_coin1.rename(columns={'open': 'coin1_open', 'close': 'coin1_close'}, inplace=
 df_coin2.rename(columns={'open': 'coin2_open', 'close': 'coin2_close'}, inplace=True)
 # 合并数据
 df = pd.merge(left=df_coin1[['candle_end_time', 'coin1_open', 'coin1_close', 'coin1_pct']], left_on=['candle_end_time'],
-              right=df_coin2[['candle_end_time', 'coin2_open', 'coin2_close', 'coin2_pct']], right_on=['candle_end_time'],
+              right=df_coin2[['candle_end_time', 'coin2_open', 'coin2_close', 'coin2_pct']],
+              right_on=['candle_end_time'],
               how='left')
 # 计算N日的涨跌幅momentum
 df['coin1_mom'] = df['coin1_close'].pct_change(periods=momentum_days)
@@ -45,7 +47,7 @@ df.dropna(subset=['pos'], inplace=True)
 # df = df[df['candle_end_time'] >= pd.to_datetime('20170101')]
 # df = df[df['candle_end_time'] >= pd.to_datetime('20171217')]
 # df = df[df['candle_end_time'] >= pd.to_datetime('20210108')]
-df = df[df['candle_end_time'] >= pd.to_datetime('20210107')]
+# df = df[df['candle_end_time'] >= pd.to_datetime('20210107')]
 
 # df = df[df['candle_end_time'] <= pd.to_datetime('20180617')]
 # df = df[df['candle_end_time'] <= pd.to_datetime('20200313')]
@@ -77,10 +79,9 @@ df['coin1_net'] = df['coin1_close'] / df['coin1_close'][0]
 df['coin2_net'] = df['coin2_close'] / df['coin2_close'][0]
 df['strategy_net'] = (1 + df['strategy_pct_adjust']).cumprod()
 
-week = 6
+week = 5
 invest_cash = 1000
 init_capital = 78000
-
 
 df['total_capital_turn'] = df['strategy_net'] * init_capital
 
@@ -98,10 +99,8 @@ df.loc[(df['week'] == week) & (df['pos'] == 'empty'), 'normal_pct_adjust'] = 0
 df['normal_capital'] = df['normal_invest'] * (1 + df['normal_pct_adjust'])
 df['normal_capital'].fillna(value=0, inplace=True)
 
-
 # df.loc['total_capital'] = df['total_capital'].shift(1) * (1 + df['strategy_pct_adjust']) + df['normal_capital']
 df['total_capital'] = (1 + df['strategy_pct_adjust']).cumprod()
-
 
 # 评估策略的好坏
 res = evaluate_investment(df, 'strategy_net', time='candle_end_time')
@@ -115,3 +114,4 @@ plt.show()
 # 保存文件
 print(df.tail(10))
 df.to_csv('abtc_轮动_改进.csv', encoding='gbk', index=False)
+exit()

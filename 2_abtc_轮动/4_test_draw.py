@@ -1,7 +1,7 @@
-
 import pandas as pd
 from function import *
 import matplotlib.pyplot as plt
+
 pd.set_option('expand_frame_repr', False)  # 当列太多时不换行
 pd.set_option('display.max_rows', 5000)  # 最多显示数据的行数
 
@@ -23,3 +23,4 @@ plt.show()
 # 保存文件
 print(df.tail(10))
 df.to_csv('abtc_轮动_改进.csv', encoding='gbk', index=False)
+exit()

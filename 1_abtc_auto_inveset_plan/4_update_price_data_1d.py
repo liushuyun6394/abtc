@@ -104,7 +104,8 @@ if exchange.has['fetchOHLCV']:
 print('-------------------------------------------------')
 df = pd.DataFrame(eth_usdt_OHLCV, columns=['candle_end_time', 'open', 'high', 'low', 'close', 'volume'])
 # df['candle_end_time'] = df['candle_end_time'].map(lambda x: pd.Timestamp(x, unit="ms"))
-df['candle_end_time'] = pd.to_datetime(df['candle_end_time']/1000, unit='s', origin='1970-01-01 08:00:00').dt.strftime('%Y-%m-%d %H:%M:%S')
+df['candle_end_time'] = pd.to_datetime(df['candle_end_time'] / 1000, unit='s',
+                                       origin='1970-01-01 08:00:00').dt.strftime('%Y-%m-%d %H:%M:%S')
 # print(df)
 print(df.tail(10))
 df.to_csv('BTCUSD-1d-curr.csv', encoding='gbk', index=False)
@@ -119,7 +120,8 @@ if exchange.has['fetchOHLCV']:
 print('-------------------------------------------------')
 df = pd.DataFrame(eth_usdt_OHLCV, columns=['candle_end_time', 'open', 'high', 'low', 'close', 'volume'])
 # df['candle_end_time'] = df['candle_end_time'].map(lambda x: pd.Timestamp(x, unit="ms"))
-df['candle_end_time'] = pd.to_datetime(df['candle_end_time']/1000, unit='s', origin='1970-01-01 08:00:00').dt.strftime('%Y-%m-%d %H:%M:%S')
+df['candle_end_time'] = pd.to_datetime(df['candle_end_time'] / 1000, unit='s',
+                                       origin='1970-01-01 08:00:00').dt.strftime('%Y-%m-%d %H:%M:%S')
 # print(df)
 print(df.tail(10))
 df.to_csv('ETHUSD-1d-curr.csv', encoding='gbk', index=False)
@@ -134,3 +136,4 @@ df.to_csv('ETHUSD-1d-curr.csv', encoding='gbk', index=False)
 # # 保存成csv文件
 # df.to_csv('bitmex_data.csv')  # comma seperate Value
 # print(df)
+exit()
