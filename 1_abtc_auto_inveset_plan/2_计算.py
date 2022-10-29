@@ -11,8 +11,8 @@ step = 0.1  # 单位定投率Y
 
 invest_cash = 108
 
-now_price = 44083.6
-ma_price = 47369.35
+now_price = 39550
+ma_price = 47497
 
 bias = (now_price - ma_price) / ma_price
 

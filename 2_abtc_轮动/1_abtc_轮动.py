@@ -42,7 +42,7 @@ df.dropna(subset=['pos'], inplace=True)
 # 从17年开始回测
 # df = df[df['candle_end_time'] >= pd.to_datetime('20170101')]
 # df = df[df['candle_end_time'] >= pd.to_datetime('20171217')]
-df = df[df['candle_end_time'] >= pd.to_datetime('20210107')]
+df = df[df['candle_end_time'] >= pd.to_datetime('20220401')]
 
 # df = df[df['candle_end_time'] <= pd.to_datetime('20200313')]
 # df = df[df['candle_end_time'] <= pd.to_datetime('20201218')]

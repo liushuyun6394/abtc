@@ -6,8 +6,9 @@ pd.set_option('expand_frame_repr', False)  # 当列太多时不换行
 pd.set_option('display.max_rows', 5000)  # 最多显示数据的行数
 
 # 读取数据
-df = pd.read_csv('BTC-USDT-1d.csv', encoding='gbk', parse_dates=['candle_time'])
-# df = pd.read_csv('BTCUSD-1d-curr.csv', encoding='gbk', parse_dates=['candle_end_time'])
+# df = pd.read_csv('BTC-USDT-1d.csv', encoding='gbk', parse_dates=['candle_time'])
+df = pd.read_csv('BTC-USDT-1d-sum.csv', encoding='gbk', parse_dates=['candle_time'])
+# df = pd.read_csv('BTCUSD-1d-curr.csv', encoding='gbk', parse_dates=['candle_time'])
 # 设置参数
 can_sell = False  # 是否允许卖出
 days = 250  # 均线日期D
@@ -20,13 +21,11 @@ week = 4  # 每周几定投。0代表周一，1代表周二，以此类推
 # 计算均线
 df['ma'] = df['close'].rolling(days, min_periods=1).mean()
 # 从17年开始回测
-# df = df[df['candle_end_time'] >= pd.to_datetime('20170101')]
-# df = df[df['candle_time'] >= pd.to_datetime('20171217')]
-# df = df[df['candle_end_time'] >= pd.to_datetime('20210107')]
-# df = df[df['candle_end_time'] <= pd.to_datetime('20200313')]
-# df = df[df['candle_time'] <= pd.to_datetime('20201218')]
+# df = df[df['candle_time'] >= pd.to_datetime('20170101')]
+# df = df[df['candle_time'] >= pd.to_datetime('20171202')]
+df = df[df['candle_time'] >= pd.to_datetime('20171217')]
+
 # df['week'] = df['candle_time'].dt.dayofweek
-# df['week'] = df['candle_end_time'].dt.dayofweek
 df['week'] = df['candle_time'].dt.dayofweek
 df['bias'] = (df['close'] - df['ma']) / df['ma']
 
